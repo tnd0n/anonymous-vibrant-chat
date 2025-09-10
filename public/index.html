@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Vibrant Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2>Loading Anonymous Chat...</h2>
+        </div>
+    </div>
+
+    <!-- Nickname Entry Screen -->
+    <div id="nicknameScreen" class="nickname-screen">
+        <div class="nickname-container">
+            <div class="logo">
+                <i class="fas fa-comments"></i>
+                <h1>Anonymous Chat</h1>
+                <p>Connect anonymously, chat freely</p>
+            </div>
+
+            <div class="nickname-form">
+                <h3>Choose Your Nickname</h3>
+                <input type="text" id="nicknameInput" placeholder="Enter your nickname..." maxlength="20">
+                <button id="joinButton" class="join-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Join Chat
+                </button>
+                <p class="privacy-note">
+                    <i class="fas fa-shield-alt"></i>
+                    No personal information required • Fully anonymous
+                </p>
+            </div>
+
+            <div id="nicknameError" class="error-message"></div>
+        </div>
+    </div>
+
+    <!-- Main Chat Interface -->
+    <div id="chatInterface" class="chat-interface hidden">
+        <!-- Header -->
+        <header class="chat-header">
+            <div class="header-left">
+                <div class="logo-small">
+                    <i class="fas fa-comments"></i>
+                    <span>Anonymous Chat</span>
+                </div>
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="currentUser">Guest</span>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button id="toggleUsers" class="toggle-btn" title="Toggle Users List">
+                    <i class="fas fa-users"></i>
+                    <span id="userCount">0</span>
+                </button>
+                <button id="toggleSettings" class="toggle-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Chat Area -->
+        <div class="chat-main">
+            <!-- Users Sidebar -->
+            <div id="usersSidebar" class="users-sidebar">
+                <div class="sidebar-header">
+                    <h3><i class="fas fa-users"></i> Online Users</h3>
+                </div>
+                <div id="usersList" class="users-list">
+                    <!-- Users will be populated here -->
+                </div>
+            </div>
+
+            <!-- Chat Content -->
+            <div class="chat-content">
+                <!-- Public Chat -->
+                <div id="publicChat" class="chat-section active">
+                    <div class="chat-header-section">
+                        <h3><i class="fas fa-globe"></i> Public Chat</h3>
+                        <div class="typing-indicator" id="typingIndicator"></div>
+                    </div>
+
+                    <div id="messagesContainer" class="messages-container">
+                        <div class="welcome-message">
+                            <i class="fas fa-comments"></i>
+                            <h3>Welcome to Anonymous Chat!</h3>
+                            <p>Start chatting with everyone or like someone to start a private conversation</p>
+                        </div>
+                    </div>
+
+                    <div class="message-input-container">
+                        <div class="input-group">
+                            <input type="text" id="messageInput" placeholder="Type your message..." maxlength="500">
+                            <button id="sendButton" class="send-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Private Chats -->
+                <div id="privateChats" class="private-chats">
+                    <!-- Private chat tabs will be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Private Chat Modal -->
+    <div id="privateChatModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="privateChatTitle">Private Chat</h3>
+                <button class="modal-close" onclick="closePrivateChat()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div id="privateChatMessages" class="private-messages">
+                <!-- Private messages will be displayed here -->
+            </div>
+
+            <div class="private-input-container">
+                <div class="input-group">
+                    <input type="text" id="privateMessageInput" placeholder="Type private message..." maxlength="500">
+                    <button id="sendPrivateButton" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notificationToast" class="notification-toast hidden">
+        <div class="toast-content">
+            <i class="fas fa-info-circle"></i>
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+
+    <!-- Admin Panel (Hidden by default) -->
+    <div id="adminPanel" class="admin-panel hidden">
+        <div class="admin-header">
+            <h3><i class="fas fa-shield-alt"></i> Admin Panel</h3>
+            <button onclick="toggleAdmin()" class="admin-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="admin-content">
+            <input type="password" id="adminPassword" placeholder="Admin password">
+            <button onclick="authenticateAdmin()" class="admin-btn">Authenticate</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
